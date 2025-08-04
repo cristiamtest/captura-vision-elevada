@@ -1,0 +1,114 @@
+import { Calendar, Camera, Edit3, Send } from 'lucide-react';
+
+const processSteps = [
+  {
+    icon: Calendar,
+    step: "01",
+    title: "Booking",
+    description: "Simple and quick appointment scheduling that respects your busy schedule."
+  },
+  {
+    icon: Camera,
+    step: "02", 
+    title: "Shooting",
+    description: "Professional on-site photography and videography with attention to every detail."
+  },
+  {
+    icon: Edit3,
+    step: "03",
+    title: "Editing",
+    description: "Expert post-production work to ensure every image and video meets our high standards."
+  },
+  {
+    icon: Send,
+    step: "04",
+    title: "Delivery",
+    description: "Fast delivery of your finished products - photos in 24 hours, videos in 48 hours."
+  }
+];
+
+export default function ProcessSection() {
+  return (
+    <section className="section-padding bg-background">
+      <div className="container-custom">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-5xl lg:text-6xl font-bold text-foreground mb-6">
+            Our <span className="gradient-text">Process</span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            A streamlined workflow designed for efficiency and excellence, 
+            making it simple to get professional results fast.
+          </p>
+        </div>
+
+        {/* Process Steps */}
+        <div className="relative">
+          {/* Connection Line */}
+          <div className="absolute top-24 left-1/2 transform -translate-x-1/2 w-px h-full bg-gradient-to-b from-primary via-primary/50 to-transparent hidden lg:block" />
+          
+          <div className="space-y-16 lg:space-y-24">
+            {processSteps.map((step, index) => (
+              <div
+                key={index}
+                className={`flex items-center gap-12 ${
+                  index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                } flex-col lg:flex-row`}
+              >
+                {/* Content */}
+                <div className={`flex-1 ${index % 2 === 0 ? 'lg:text-right' : 'lg:text-left'} text-center lg:text-left`}>
+                  <div className="scroll-reveal" style={{ animationDelay: `${index * 0.2}s` }}>
+                    <span className="text-sm font-medium text-primary uppercase tracking-wider">
+                      Step {step.step}
+                    </span>
+                    <h3 className="text-3xl lg:text-4xl font-bold text-foreground mt-2 mb-4">
+                      {step.title}
+                    </h3>
+                    <p className="text-lg text-muted-foreground leading-relaxed max-w-md mx-auto lg:mx-0">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Icon */}
+                <div className="relative">
+                  <div className="w-24 h-24 bg-gradient-hero rounded-full flex items-center justify-center shadow-glow animate-float">
+                    <step.icon className="w-10 h-10 text-white" />
+                  </div>
+                  {/* Step Number */}
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold">
+                    {step.step}
+                  </div>
+                </div>
+
+                {/* Spacer */}
+                <div className="flex-1 hidden lg:block" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="mt-20 text-center">
+          <div className="max-w-3xl mx-auto p-8 rounded-2xl bg-gradient-to-r from-muted/50 to-accent/50 border border-border">
+            <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
+              Ready to Get Started?
+            </h3>
+            <p className="text-lg text-muted-foreground mb-6">
+              Experience our simple, efficient process that delivers exceptional results 
+              while honoring your time and investment.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="btn-hero">
+                Book Your Session
+              </button>
+              <button className="btn-outline-hero border-foreground text-foreground hover:bg-foreground hover:text-background">
+                Learn More
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
