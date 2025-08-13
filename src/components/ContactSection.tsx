@@ -6,27 +6,21 @@ import { Textarea } from './ui/textarea';
 const contactInfo = [
   {
     icon: Phone,
-    title: "Phone",
-    info: "(703) 582-2541",
-    action: "Call Us"
-  },
-  {
-    icon: MessageCircle,
-    title: "WhatsApp", 
-    info: "(703) 582-2541",
-    action: "Message Us"
+    title: "Phone & WhatsApp",
+    info: "+1 (703) 582-2541",
+    action: "Call Now"
   },
   {
     icon: Mail,
-    title: "Email",
+    title: "Email", 
     info: "2818_Studios@proton.me",
     action: "Send Email"
   },
   {
     icon: MapPin,
     title: "Service Area",
-    info: "Northern Virginia",
-    action: "View Coverage"
+    info: "Washington D.C., Maryland & Virginia",
+    action: "Hyattsville Based"
   }
 ];
 
@@ -39,11 +33,11 @@ export default function ContactSection() {
           <div className="space-y-8">
             <div>
               <h2 className="text-5xl lg:text-6xl font-bold mb-6">
-                Let's <span className="gradient-text">Connect</span>
+                Book with Us <span className="gradient-text">Today!</span>
               </h2>
               <p className="text-xl text-dark-fg/80 leading-relaxed">
-                Ready to elevate your property listings? Contact us today and 
-                experience the 2818 Studios difference.
+                Ready to showcase your properties with professional media services delivered with Christian values? 
+                Contact Michael Mejía and the 2818 Studios team - we're here to help you achieve your sales goals.
               </p>
             </div>
 

@@ -5,38 +5,38 @@ const services = [
   {
     icon: Camera,
     title: "Professional Photography",
-    description: "High-quality photos delivered in 24 hours that showcase properties in their best light",
-    features: ["HDR Photography", "Twilight Shots", "Interior & Exterior", "Professional Editing"]
+    description: "High-quality real estate photography delivered in 24 hours, designed to make your listings stand out and attract serious buyers.",
+    features: ["24-Hour Delivery", "HDR Processing", "Professional Editing", "Multiple Angles", "High Resolution Images"]
   },
   {
     icon: Video,
     title: "Video Tours",
-    description: "Engaging video content delivered in 48 hours that brings properties to life",
-    features: ["Cinematic Quality", "Smooth Transitions", "Professional Audio", "Multiple Formats"]
+    description: "Cinematic quality video tours delivered in 48 hours that create emotional connections and help properties sell faster.",
+    features: ["48-Hour Delivery", "Cinematic Quality", "Story-Driven Approach", "Multiple Formats", "Social Media Ready"]
   },
   {
     icon: Box,
     title: "3D Virtual Tours",
-    description: "Interactive 3D tours that give clients control and help properties sell faster",
-    features: ["Immersive Experience", "Dollhouse View", "Floor Plan Integration", "Mobile Compatible"]
+    description: "Interactive 3D experiences using Matterport technology, delivered in 72 hours, giving your clients complete control over property exploration.",
+    features: ["72-Hour Delivery", "Matterport Technology", "Interactive Elements", "Mobile Compatible", "Global Accessibility"]
   },
   {
     icon: FileText,
     title: "Floor Plans",
-    description: "Accurate and professional floor plans that help buyers understand space layout",
-    features: ["Precise Measurements", "Professional Design", "Multiple Formats", "Quick Delivery"]
+    description: "Professional floor plans that provide clarity about property layout and spatial organization for informed decision-making.",
+    features: ["Accurate Measurements", "Professional Design", "Clear Layout", "Quick Delivery", "Multiple Formats"]
   },
   {
     icon: Instagram,
     title: "Social Media Content",
-    description: "Eye-catching content optimized for social media platforms to boost your marketing",
-    features: ["Instagram Ready", "Multiple Formats", "Branded Content", "Story Templates"]
+    description: "Optimized content for Instagram, Facebook, and TikTok including vertical videos, reels, and custom graphics ready to publish.",
+    features: ["Vertical Videos", "Instagram Reels", "Facebook Posts", "TikTok Ready", "Custom Graphics"]
   },
   {
     icon: Sparkles,
     title: "Custom Services",
-    description: "Tailored solutions to meet your specific needs with Christian standards of excellence",
-    features: ["Personalized Approach", "Flexible Solutions", "Quality Focused", "Client Honor"]
+    description: "Personalized solutions including agent branding, presentation videos, and custom packages for high-volume clients.",
+    features: ["Agent Branding", "Custom Packages", "Personal Videos", "Volume Discounts", "Consultation Included"]
   }
 ];
 

@@ -3,23 +3,23 @@ import { Award, Clock, Heart, Sparkles } from 'lucide-react';
 const values = [
   {
     icon: Heart,
-    title: "Christian Standards",
-    description: "We honor our clients not just in our products, but in how we treat them with Christian values and integrity."
-  },
-  {
-    icon: Sparkles,
-    title: "Creativity & Detail",
-    description: "Every photo and video is crafted with meticulous attention to detail and creative vision."
+    title: "Christian Values",
+    description: "We honor our clients not just in the products we deliver, but in how we treat them, guided by biblical principles of integrity and respect."
   },
   {
     icon: Clock,
-    title: "Fast Delivery",
-    description: "Photos delivered in 24 hours, videos in 48 hours. We respect your time and deadlines."
+    title: "Rapid Delivery",
+    description: "Photos in 24 hours, videos in 48 hours, 3D tours in 72 hours - because timing is crucial in real estate success."
+  },
+  {
+    icon: Sparkles,
+    title: "Creative Excellence",
+    description: "Attention to detail and creativity in every photograph and video, capturing the essence of each property with professional precision."
   },
   {
     icon: Award,
-    title: "Excellence First",
-    description: "We're committed to delivering nothing less than excellence in every project we undertake."
+    title: "Simple Process",
+    description: "Streamlined booking and delivery process designed for busy real estate professionals - from contact to final delivery."
   }
 ];
 
@@ -32,11 +32,17 @@ export default function AboutSection() {
           <div className="space-y-8">
             <div>
               <h2 className="text-5xl lg:text-6xl font-bold mb-6">
-                About <span className="gradient-text">2818 Studios</span>
+                About <span className="gradient-text">2818 Studios Media</span>
               </h2>
-              <p className="text-xl text-dark-fg/80 leading-relaxed">
-                We are a distinctively Christian company dedicated to attention to detail 
-                and creativity in photography and video for real estate agents.
+              <p className="text-xl text-dark-fg/80 leading-relaxed mb-6">
+                Founded and led by Michael Mejía, we are a distinctively Christian media company serving 
+                the Washington D.C. metropolitan area, including Maryland and Virginia. With less than a year 
+                in formal operation, we've established ourselves as a reliable and professional service.
+              </p>
+              <p className="text-lg text-dark-fg/70 leading-relaxed">
+                What sets us apart is our commitment to biblical principles - we aim to honor our clients 
+                in both the products we deliver and how we treat them, with ethics, integrity, and respect 
+                as non-negotiable elements in every business relationship.
               </p>
             </div>
 

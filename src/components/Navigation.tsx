@@ -10,6 +10,7 @@ export default function Navigation() {
     { name: 'Services', href: '#services' },
     { name: 'About', href: '#about' },
     { name: 'Process', href: '#process' },
+    { name: 'FAQ', href: '#faq' },
     { name: 'Contact', href: '#contact' }
   ];
 
@@ -20,7 +21,7 @@ export default function Navigation() {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <Camera className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold text-foreground">2818 Studios</span>
+            <span className="text-2xl font-bold text-foreground">2818 Studios Media</span>
           </div>
 
           {/* Desktop Navigation */}

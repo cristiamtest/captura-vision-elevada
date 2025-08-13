@@ -13,32 +13,32 @@ const slides = [
     id: 1,
     image: heroSlide1,
     title: "Excellence Captured",
-    subtitle: "Professional Real Estate Photography",
-    description: "High-quality photography that showcases properties in their best light",
+    subtitle: "and Delivered",
+    description: "Professional real estate photography and video services guided by Christian values and delivered with exceptional quality in the DMV area",
     icon: Camera
   },
   {
     id: 2,
     image: heroSlide2,
-    title: "Dynamic Video Tours", 
-    subtitle: "Immersive Property Experiences",
-    description: "Engaging video content that brings properties to life",
+    title: "Fast Delivery", 
+    subtitle: "Photos in 24hrs, Videos in 48hrs",
+    description: "Quick turnaround times without compromising quality - helping real estate agents close deals faster",
     icon: Video
   },
   {
     id: 3,
     image: heroSlide3,
     title: "3D Virtual Tours",
-    subtitle: "Interactive Property Exploration",
-    description: "Cutting-edge 3D technology for comprehensive property viewing",
+    subtitle: "Immersive Property Exploration",
+    description: "Give your clients control with interactive 3D tours delivered in 72 hours using Matterport technology",
     icon: Box
   },
   {
     id: 4,
     image: heroSlide4,
-    title: "Floor Plans & More",
-    subtitle: "Complete Visual Solutions",
-    description: "Professional floor plans and social media content",
+    title: "Simple Booking",
+    subtitle: "Professional Service Made Easy",
+    description: "From booking to delivery - our streamlined process makes professional media effortless for busy agents",
     icon: FileText
   }
 ];

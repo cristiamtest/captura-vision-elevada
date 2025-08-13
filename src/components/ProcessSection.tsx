@@ -4,26 +4,26 @@ const processSteps = [
   {
     icon: Calendar,
     step: "01",
-    title: "Booking",
-    description: "Simple and quick appointment scheduling that respects your busy schedule."
+    title: "Easy Booking",
+    description: "Reserve your session via our website form, WhatsApp (+1 703-582-2541), or direct phone call. Simple and quick for busy agents."
   },
   {
     icon: Camera,
     step: "02", 
-    title: "Shooting",
-    description: "Professional on-site photography and videography with attention to every detail."
+    title: "Confirmation",
+    description: "We confirm your appointment details, timing, and specific requirements. No surprises, everything is clear from the start."
   },
   {
     icon: Edit3,
     step: "03",
-    title: "Editing",
-    description: "Expert post-production work to ensure every image and video meets our high standards."
+    title: "Professional Shoot",
+    description: "Our team captures your property with attention to detail and creativity. You don't need to be present during the session."
   },
   {
     icon: Send,
     step: "04",
-    title: "Delivery",
-    description: "Fast delivery of your finished products - photos in 24 hours, videos in 48 hours."
+    title: "Fast Delivery",
+    description: "Receive your content via private digital link: Photos in 24hrs, Videos in 48hrs, 3D Tours in 72hrs. Fast and reliable."
   }
 ];
 
