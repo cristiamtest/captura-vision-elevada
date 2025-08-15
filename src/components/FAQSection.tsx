@@ -36,13 +36,13 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-dark-bg text-white">
       <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl lg:text-6xl font-bold text-dark-fg mb-8">
+          <h2 className="text-4xl lg:text-6xl font-bold text-white mb-8">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl lg:text-2xl text-dark-fg/80 leading-relaxed">
+          <p className="text-xl lg:text-2xl text-white/90 leading-relaxed">
             Quick answers to common questions about our services, process, and delivery times.
           </p>
         </div>
@@ -51,13 +51,13 @@ export default function FAQSection() {
           {faqs.map((faq, index) => (
             <div 
               key={index}
-              className="border border-dark-fg/20 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-elegant"
+              className="border border-white/20 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-elegant bg-white/5 backdrop-blur-sm"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-8 py-6 text-left flex justify-between items-center bg-white hover:bg-gray-50 transition-colors"
+                className="w-full px-8 py-6 text-left flex justify-between items-center bg-white/10 hover:bg-white/20 transition-colors border-b border-white/10"
               >
-                <h3 className="text-lg lg:text-xl font-semibold text-dark-fg pr-4">
+                <h3 className="text-lg lg:text-xl font-semibold text-white pr-4">
                   {faq.question}
                 </h3>
                 {openIndex === index ? (
@@ -68,8 +68,8 @@ export default function FAQSection() {
               </button>
               
               {openIndex === index && (
-                <div className="px-8 py-6 bg-gray-50 border-t border-dark-fg/10">
-                  <p className="text-dark-fg/80 leading-relaxed">
+                <div className="px-8 py-6 bg-white/5 border-t border-white/10">
+                  <p className="text-white/90 leading-relaxed text-lg">
                     {faq.answer}
                   </p>
                 </div>
@@ -80,7 +80,7 @@ export default function FAQSection() {
 
         {/* Call to Action */}
         <div className="text-center mt-16">
-          <p className="text-lg text-dark-fg/80 mb-6">
+          <p className="text-lg text-white/90 mb-6">
             Have a different question? We're here to help!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

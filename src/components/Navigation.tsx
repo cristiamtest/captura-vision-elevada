@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Camera, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
+import logoDark from '../assets/logo-dark.png';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,9 +20,12 @@ export default function Navigation() {
       <div className="container-custom">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <Camera className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold text-foreground">2818 Studios Media</span>
+          <div className="flex items-center">
+            <img 
+              src={logoDark} 
+              alt="2818 Studios Real Estate Media" 
+              className="h-12 w-auto object-contain"
+            />
           </div>
 
           {/* Desktop Navigation */}
@@ -39,7 +43,15 @@ export default function Navigation() {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button className="btn-hero">
+            <Button 
+              className="btn-hero"
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               Book Session
             </Button>
           </div>
@@ -67,7 +79,16 @@ export default function Navigation() {
                   {item.name}
                 </a>
               ))}
-              <Button className="w-full btn-hero mt-4">
+              <Button 
+                className="w-full btn-hero mt-4"
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                  setIsMenuOpen(false);
+                }}
+              >
                 Book Session
               </Button>
             </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight, Camera, Video, Box, FileText } from 'lucide-react';
+import logoDark from '../assets/logo-dark.png';
 
 // Import hero images
 import heroSlide1 from '@/assets/hero-slide-1.jpg';
@@ -72,8 +73,33 @@ export default function HeroSection() {
     setIsAutoPlaying(false);
   };
 
+  const handleBookSession = () => {
+    // Scroll to contact section
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleViewPortfolio = () => {
+    // Scroll to services section
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative h-screen overflow-hidden bg-dark-bg">
+      {/* Logo in top right corner */}
+      <div className="absolute top-8 right-8 z-30">
+        <img 
+          src={logoDark} 
+          alt="2818 Studios Real Estate Media" 
+          className="h-16 w-auto object-contain drop-shadow-lg"
+        />
+      </div>
+
       {/* Background Images */}
       {slides.map((slide, index) => (
         <div
@@ -120,10 +146,17 @@ export default function HeroSection() {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-8 hero-text hero-text-delay">
-                <Button className="btn-hero text-lg">
+                <Button 
+                  className="btn-hero text-lg"
+                  onClick={handleBookSession}
+                >
                   Book with us today!
                 </Button>
-                <Button variant="outline" className="btn-outline-hero text-lg bg-transparent border-white text-white hover:bg-white hover:text-dark-bg">
+                <Button 
+                  variant="outline" 
+                  className="btn-outline-hero text-lg bg-transparent border-white text-white hover:bg-white hover:text-dark-bg"
+                  onClick={handleViewPortfolio}
+                >
                   View Portfolio
                 </Button>
               </div>
