@@ -38,11 +38,11 @@ export default function FAQSection() {
   return (
     <section className="py-20 bg-dark-bg text-white">
       <div className="container-custom">
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 lg:mb-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-4xl lg:text-6xl font-bold text-white mb-8">
             Frequently Asked Questions
           </h2>
-          <p className="text-base sm:text-lg lg:text-2xl text-white/90 leading-relaxed">
+          <p className="text-xl lg:text-2xl text-white/90 leading-relaxed">
             Quick answers to common questions about our services, process, and delivery times.
           </p>
         </div>
@@ -51,25 +51,25 @@ export default function FAQSection() {
           {faqs.map((faq, index) => (
             <div 
               key={index}
-              className="border border-white/20 rounded-lg mb-3 sm:mb-4 overflow-hidden transition-all duration-300 hover:shadow-elegant bg-white/5 backdrop-blur-sm"
+              className="border border-white/20 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-elegant bg-white/5 backdrop-blur-sm"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-6 text-left flex justify-between items-center bg-white/10 hover:bg-white/20 transition-colors border-b border-white/10"
+                className="w-full px-8 py-6 text-left flex justify-between items-center bg-white/10 hover:bg-white/20 transition-colors border-b border-white/10"
               >
-                <h3 className="text-sm sm:text-base lg:text-xl font-semibold text-white pr-3 sm:pr-4 leading-relaxed">
+                <h3 className="text-lg lg:text-xl font-semibold text-white pr-4">
                   {faq.question}
                 </h3>
                 {openIndex === index ? (
-                  <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+                  <ChevronUp className="w-6 h-6 text-primary flex-shrink-0" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+                  <ChevronDown className="w-6 h-6 text-primary flex-shrink-0" />
                 )}
               </button>
               
               {openIndex === index && (
-                <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-6 bg-white/5 border-t border-white/10">
-                  <p className="text-white/90 leading-relaxed text-sm sm:text-base lg:text-lg">
+                <div className="px-8 py-6 bg-white/5 border-t border-white/10">
+                  <p className="text-white/90 leading-relaxed text-lg">
                     {faq.answer}
                   </p>
                 </div>
@@ -79,14 +79,14 @@ export default function FAQSection() {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-8 sm:mt-12 lg:mt-16">
-          <p className="text-sm sm:text-base lg:text-lg text-white/90 mb-4 sm:mb-6">
+        <div className="text-center mt-16">
+          <p className="text-lg text-white/90 mb-6">
             Have a different question? We're here to help!
           </p>
-          <div className="flex flex-col gap-3 sm:gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="tel:+17035822541"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-hover transition-colors text-sm sm:text-base w-full sm:w-auto"
+              className="inline-flex items-center justify-center px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-hover transition-colors"
             >
               Call Us: (703) 582-2541
             </a>
@@ -94,7 +94,7 @@ export default function FAQSection() {
               href="https://wa.me/17035822541"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 border border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors text-sm sm:text-base w-full sm:w-auto"
+              className="inline-flex items-center justify-center px-8 py-3 border border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors"
             >
               WhatsApp Us
             </a>

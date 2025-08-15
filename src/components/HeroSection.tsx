@@ -91,7 +91,14 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-screen overflow-hidden bg-dark-bg">
-
+      {/* Logo in top right corner */}
+      <div className="absolute top-8 right-8 z-30">
+        <img 
+          src={logoDark} 
+          alt="2818 Studios Real Estate Media" 
+          className="h-16 w-auto object-contain drop-shadow-lg"
+        />
+      </div>
 
       {/* Background Images */}
       {slides.map((slide, index) => (
@@ -115,39 +122,39 @@ export default function HeroSection() {
         <div className="container-custom">
           <div className="max-w-4xl">
             {/* Icon */}
-            <div className="mb-4 sm:mb-8 animate-float">
+            <div className="mb-8 animate-float">
               {slides[currentSlide].icon && 
                 React.createElement(slides[currentSlide].icon, {
-                  className: "w-12 h-12 sm:w-16 sm:h-16 text-primary mb-4 sm:mb-6"
+                  className: "w-16 h-16 text-primary mb-6"
                 })
               }
             </div>
 
             {/* Main Content */}
-            <div className="space-y-4 sm:space-y-6">
-              <h1 className="text-4xl sm:text-5xl lg:text-8xl font-bold text-white leading-tight hero-text">
+            <div className="space-y-6">
+              <h1 className="text-6xl lg:text-8xl font-bold text-white leading-tight hero-text">
                 {slides[currentSlide].title}
               </h1>
               
-              <h2 className="text-lg sm:text-xl lg:text-4xl font-light text-primary hero-text hero-text-delay">
+              <h2 className="text-2xl lg:text-4xl font-light text-primary hero-text hero-text-delay">
                 {slides[currentSlide].subtitle}
               </h2>
               
-              <p className="text-base sm:text-lg lg:text-2xl text-white/80 max-w-2xl hero-text hero-text-delay leading-relaxed">
+              <p className="text-xl lg:text-2xl text-white/80 max-w-2xl hero-text hero-text-delay">
                 {slides[currentSlide].description}
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col gap-3 pt-6 sm:pt-8 hero-text hero-text-delay">
+              <div className="flex flex-col sm:flex-row gap-4 pt-8 hero-text hero-text-delay">
                 <Button 
-                  className="btn-hero text-base sm:text-lg w-full sm:w-auto"
+                  className="btn-hero text-lg"
                   onClick={handleBookSession}
                 >
                   Book with us today!
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="btn-outline-hero text-base sm:text-lg bg-transparent border-white text-white hover:bg-white hover:text-dark-bg w-full sm:w-auto"
+                  className="btn-outline-hero text-lg bg-transparent border-white text-white hover:bg-white hover:text-dark-bg"
                   onClick={handleViewPortfolio}
                 >
                   View Portfolio
@@ -159,15 +166,15 @@ export default function HeroSection() {
       </div>
 
       {/* Navigation Controls */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-        <div className="flex space-x-3 sm:space-x-4">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="flex space-x-4">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentSlide 
-                  ? 'bg-primary w-6 sm:w-8' 
+                  ? 'bg-primary w-8' 
                   : 'bg-white/50 hover:bg-white/80'
               }`}
             />
@@ -178,20 +185,20 @@ export default function HeroSection() {
       {/* Side Navigation */}
       <button
         onClick={prevSlide}
-        className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 z-20 text-white/80 hover:text-white transition-colors p-1 sm:p-2"
+        className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 text-white/80 hover:text-white transition-colors p-2"
       >
-        <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
+        <ChevronLeft className="w-8 h-8" />
       </button>
 
       <button
         onClick={nextSlide}
-        className="absolute right-2 sm:right-6 top-1/2 transform -translate-y-1/2 z-20 text-white/80 hover:text-white transition-colors p-1 sm:p-2"
+        className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 text-white/80 hover:text-white transition-colors p-2"
       >
-        <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
+        <ChevronRight className="w-8 h-8" />
       </button>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-12 sm:bottom-16 left-2 sm:left-6 z-20 text-white/60 hidden sm:flex">
+      <div className="absolute bottom-16 left-6 z-20 text-white/60">
         <div className="flex items-center space-x-2">
           <div className="w-px h-12 bg-white/30"></div>
           <span className="text-sm font-light rotate-90 transform origin-left">scroll</span>
