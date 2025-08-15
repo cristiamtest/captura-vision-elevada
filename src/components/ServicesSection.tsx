@@ -68,6 +68,12 @@ export default function ServicesSection() {
           <Button 
             variant="ghost" 
             className="text-muted-foreground hover:text-foreground transition-colors group mb-4"
+            onClick={() => {
+              const contactSection = document.getElementById('contact');
+              if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
           >
             SEE ALL SERVICES
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -129,7 +135,15 @@ export default function ServicesSection() {
               Experience the difference that professional photography and video can make 
               for your real estate business.
             </p>
-            <Button className="btn-hero bg-white text-primary hover:bg-white/90 tracking-wide">
+            <Button 
+              className="btn-hero bg-white text-primary hover:bg-white/90 tracking-wide"
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               Book Your Session Today
             </Button>
           </div>

@@ -20,7 +20,7 @@ const contactInfo = [
     icon: MapPin,
     title: "Service Area",
     info: "Washington D.C., Maryland & Virginia",
-    action: "Hyattsville Based"
+    action: "DMV Coverage"
   }
 ];
 
@@ -55,7 +55,18 @@ export default function ContactSection() {
                     <h4 className="font-semibold text-dark-fg">{contact.title}</h4>
                     <p className="text-dark-fg/70">{contact.info}</p>
                   </div>
-                  <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="border-primary text-primary hover:bg-primary hover:text-white"
+                    onClick={() => {
+                      if (contact.title === "Phone & WhatsApp") {
+                        window.open("tel:+17035822541", "_self");
+                      } else if (contact.title === "Email") {
+                        window.open("mailto:2818_Studios@proton.me", "_self");
+                      }
+                    }}
+                  >
                     {contact.action}
                   </Button>
                 </div>
@@ -66,10 +77,20 @@ export default function ContactSection() {
             <div className="pt-8 border-t border-white/10">
               <h4 className="font-semibold text-dark-fg mb-4">Follow Us</h4>
               <div className="flex space-x-4">
-                <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-primary text-primary hover:bg-primary hover:text-white"
+                  onClick={() => window.open("https://facebook.com/2818studios", "_blank")}
+                >
                   Facebook
                 </Button>
-                <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-primary text-primary hover:bg-primary hover:text-white"
+                  onClick={() => window.open("https://instagram.com/2818studios", "_blank")}
+                >
                   Instagram
                 </Button>
               </div>

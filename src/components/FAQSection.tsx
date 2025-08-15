@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     question: "What areas do you serve?",
-    answer: "We serve the entire Washington D.C. metropolitan area, including Maryland and Virginia. Our base is in Hyattsville, but we travel throughout the DMV region for our clients."
+    answer: "We serve the entire Washington D.C. metropolitan area, including Maryland and Virginia. We're based in the DMV region and travel throughout all areas to serve our clients."
   },
   {
     question: "What makes 2818 Studios different from other media companies?",

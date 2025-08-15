@@ -99,10 +99,26 @@ export default function ProcessSection() {
               while honoring your time and investment.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="btn-hero">
+              <button 
+                className="btn-hero"
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
                 Book Your Session
               </button>
-              <button className="btn-outline-hero border-foreground text-foreground hover:bg-foreground hover:text-background">
+              <button 
+                className="btn-outline-hero border-foreground text-foreground hover:bg-foreground hover:text-background"
+                onClick={() => {
+                  const servicesSection = document.getElementById('services');
+                  if (servicesSection) {
+                    servicesSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
                 Learn More
               </button>
             </div>
