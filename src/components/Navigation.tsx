@@ -16,7 +16,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-border/50 shadow-sm">
       <div className="container-custom">
         <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-0">
           {/* Logo */}
@@ -24,7 +24,7 @@ export default function Navigation() {
             <img 
               src={logoDark} 
               alt="2818 Studios Real Estate Media" 
-              className="h-10 sm:h-12 w-auto object-contain"
+              className="h-10 sm:h-16 w-auto object-contain"
             />
           </div>
 
@@ -68,7 +68,7 @@ export default function Navigation() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl">
+          <div className="md:hidden border-t border-border/50 bg-white">
             <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
                 <a
