@@ -9,6 +9,7 @@ export default function Navigation() {
   const navItems = [
     { name: 'Home', href: '#home' },
     { name: 'Services', href: '#services' },
+    { name: 'Portfolio', href: '/portfolio' },
     { name: 'About', href: '#about' },
     { name: 'Process', href: '#process' },
     { name: 'FAQ', href: '#faq' },
@@ -35,6 +36,15 @@ export default function Navigation() {
                 key={item.name}
                 href={item.href}
                 className="text-foreground hover:text-primary transition-colors duration-200 font-medium text-sm lg:text-base"
+                onClick={item.href.startsWith('#') ? (e) => {
+                  e.preventDefault();
+                  if (window.location.pathname !== '/') {
+                    window.location.href = '/' + item.href;
+                  } else {
+                    const element = document.querySelector(item.href);
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                } : undefined}
               >
                 {item.name}
               </a>
@@ -75,7 +85,17 @@ export default function Navigation() {
                   key={item.name}
                   href={item.href}
                   className="block text-foreground hover:text-primary transition-colors duration-200 font-medium text-lg py-2 px-2"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    if (item.href.startsWith('#') && window.location.pathname !== '/') {
+                      window.location.href = '/' + item.href;
+                    } else if (item.href.startsWith('#')) {
+                      setTimeout(() => {
+                        const element = document.querySelector(item.href);
+                        element?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }
+                  }}
                 >
                   {item.name}
                 </a>

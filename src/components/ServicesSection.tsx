@@ -68,14 +68,9 @@ export default function ServicesSection() {
           <Button 
             variant="ghost" 
             className="text-muted-foreground hover:text-foreground transition-colors group mb-0 sm:mb-4 self-start sm:self-auto text-sm sm:text-base"
-            onClick={() => {
-              const contactSection = document.getElementById('contact');
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
+            onClick={() => window.location.href = '/portfolio'}
           >
-            SEE ALL SERVICES
+            VIEW PORTFOLIO
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
@@ -85,8 +80,9 @@ export default function ServicesSection() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-2xl bg-muted/30 hover:shadow-glow transition-all duration-500"
+              className="group relative overflow-hidden rounded-2xl bg-muted/30 hover:shadow-glow transition-all duration-500 cursor-pointer"
               style={{ animationDelay: `${index * 0.1}s` }}
+              onClick={() => window.location.href = '/portfolio'}
             >
               {/* Background Image */}
               <div className="relative h-80 sm:h-96 lg:h-[500px] overflow-hidden">

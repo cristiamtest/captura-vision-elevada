@@ -82,11 +82,7 @@ export default function HeroSection() {
   };
 
   const handleViewPortfolio = () => {
-    // Scroll to services section
-    const servicesSection = document.getElementById('services');
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    window.location.href = '/portfolio';
   };
 
   return (
