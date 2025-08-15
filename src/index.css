@@ -171,7 +171,7 @@ All colors MUST be HSL.
 
   /* Section spacing */
   .section-padding {
-    @apply py-20 px-6 lg:px-12;
+    @apply py-12 sm:py-16 lg:py-20;
   }
 
   /* Container max width */

@@ -55,11 +55,11 @@ const services = [
 export default function ServicesSection() {
   return (
     <section className="section-padding bg-background">
-      <div className="container-custom">
+      <div className="container-custom px-4 sm:px-6 lg:px-12">
         {/* Header */}
-        <div className="flex justify-between items-end mb-16">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-12 sm:mb-16 space-y-6 sm:space-y-0">
           <div>
-            <h2 className="text-6xl lg:text-7xl font-bold text-foreground tracking-wider">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-wider leading-tight">
               SELECTED
               <br />
               <span className="text-brand-orange">SERVICES</span>
@@ -67,7 +67,7 @@ export default function ServicesSection() {
           </div>
           <Button 
             variant="ghost" 
-            className="text-muted-foreground hover:text-foreground transition-colors group mb-4"
+            className="text-muted-foreground hover:text-foreground transition-colors group mb-0 sm:mb-4 self-start sm:self-auto text-sm sm:text-base"
             onClick={() => {
               const contactSection = document.getElementById('contact');
               if (contactSection) {
@@ -81,7 +81,7 @@ export default function ServicesSection() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {services.map((service, index) => (
             <div
               key={index}
@@ -89,7 +89,7 @@ export default function ServicesSection() {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Background Image */}
-              <div className="relative h-96 lg:h-[500px] overflow-hidden">
+              <div className="relative h-80 sm:h-96 lg:h-[500px] overflow-hidden">
                 <img
                   src={service.image}
                   alt={service.title}
@@ -99,13 +99,13 @@ export default function ServicesSection() {
               </div>
               
               {/* Content Overlay */}
-              <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-12">
+              <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-12">
                 <div className="transform transition-transform duration-300 group-hover:translate-y-[-8px]">
-                  <div className="text-sm font-medium text-brand-orange mb-2 tracking-wider">
+                  <div className="text-xs sm:text-sm font-medium text-brand-orange mb-2 tracking-wider">
                     {service.subtitle}
                   </div>
                   
-                  <h3 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-wider leading-tight">
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 tracking-wider leading-tight">
                     {service.title.split(' ').map((word, i) => (
                       <span key={i} className="block">
                         {word.split('').join(' ')}
@@ -114,10 +114,10 @@ export default function ServicesSection() {
                   </h3>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-white/80 text-sm font-medium">
+                    <span className="text-white/80 text-xs sm:text-sm font-medium">
                       {service.delivery}
                     </span>
-                    <ArrowRight className="w-6 h-6 text-white/60 group-hover:text-brand-orange group-hover:translate-x-2 transition-all duration-300" />
+                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-white/60 group-hover:text-brand-orange group-hover:translate-x-2 transition-all duration-300" />
                   </div>
                 </div>
               </div>
@@ -127,16 +127,16 @@ export default function ServicesSection() {
 
         {/* Bottom CTA */}
         <div className="text-center">
-          <div className="bg-gradient-hero rounded-2xl p-12 text-center">
-            <h3 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-wide">
+          <div className="bg-gradient-hero rounded-2xl p-6 sm:p-8 lg:p-12 text-center">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 tracking-wide leading-tight">
               Ready to elevate your listings?
             </h3>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-white/90 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
               Experience the difference that professional photography and video can make 
               for your real estate business.
             </p>
             <Button 
-              className="btn-hero bg-white text-primary hover:bg-white/90 tracking-wide"
+              className="btn-hero bg-white text-primary hover:bg-white/90 tracking-wide text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4"
               onClick={() => {
                 const contactSection = document.getElementById('contact');
                 if (contactSection) {
