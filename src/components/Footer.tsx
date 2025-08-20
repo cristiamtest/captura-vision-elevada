@@ -33,7 +33,7 @@ export default function Footer() {
             <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Contact</h4>
             <ul className="space-y-1.5 sm:space-y-2 text-background/70 text-sm sm:text-base">
               <li>Phone: +1 (703) 582-2541</li>
-              <li>Email: 2818_Studios@proton.me</li>
+              <li>Email: info@2818studios.com</li>
               <li>Service Area: DMV (DC, MD, VA)</li>
               <li>WhatsApp Available</li>
             </ul>

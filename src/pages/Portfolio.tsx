@@ -139,8 +139,8 @@ export default function Portfolio() {
     setSelectedImage(newIndex);
   };
 
-  const scrollToContact = () => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  const handleBookSession = () => {
+    window.open('https://order.2818studios.com/', '_blank');
   };
 
   return (
@@ -163,7 +163,7 @@ export default function Portfolio() {
               {/* Book Session CTA */}
               <Button 
                 className="btn-hero text-lg px-8 py-4 mb-12"
-                onClick={scrollToContact}
+                onClick={handleBookSession}
               >
                 Book Your Session Today
               </Button>
@@ -304,7 +304,7 @@ export default function Portfolio() {
                 </p>
                 <Button 
                   className="btn-hero bg-white text-primary hover:bg-white/90 text-lg px-8 py-4"
-                  onClick={scrollToContact}
+                  onClick={handleBookSession}
                 >
                   Book Your Session Today
                 </Button>
@@ -330,7 +330,7 @@ export default function Portfolio() {
           {/* Book Session Button in Lightbox */}
           <Button
             className="absolute top-4 left-4 z-10 btn-hero text-sm px-4 py-2"
-            onClick={scrollToContact}
+            onClick={handleBookSession}
           >
             Book Session
           </Button>

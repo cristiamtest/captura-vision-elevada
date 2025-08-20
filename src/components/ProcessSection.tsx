@@ -101,12 +101,7 @@ export default function ProcessSection() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <button 
                 className="btn-hero text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4"
-                onClick={() => {
-                  const contactSection = document.getElementById('contact');
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
+                onClick={() => window.open('https://order.2818studios.com/', '_blank')}
               >
                 Book Your Session
               </button>

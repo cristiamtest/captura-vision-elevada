@@ -55,12 +55,7 @@ export default function Navigation() {
           <div className="hidden md:block">
             <Button 
               className="btn-hero text-sm lg:text-base px-4 lg:px-8 py-2 lg:py-4"
-              onClick={() => {
-                const contactSection = document.getElementById('contact');
-                if (contactSection) {
-                  contactSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
+              onClick={() => window.open('https://order.2818studios.com/', '_blank')}
             >
               Book Session
             </Button>
@@ -104,10 +99,7 @@ export default function Navigation() {
                 <Button 
                   className="w-full btn-hero text-lg py-4"
                   onClick={() => {
-                    const contactSection = document.getElementById('contact');
-                    if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: 'smooth' });
-                    }
+                    window.open('https://order.2818studios.com/', '_blank');
                     setIsMenuOpen(false);
                   }}
                 >

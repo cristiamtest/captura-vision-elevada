@@ -13,7 +13,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email", 
-    info: "2818_Studios@proton.me",
+    info: "info@2818studios.com",
     action: "Send Email"
   },
   {
@@ -63,7 +63,7 @@ export default function ContactSection() {
                       if (contact.title === "Phone & WhatsApp") {
                         window.open("tel:+17035822541", "_self");
                       } else if (contact.title === "Email") {
-                        window.open("mailto:2818_Studios@proton.me", "_self");
+                        window.open("mailto:info@2818studios.com", "_self");
                       }
                     }}
                   >
@@ -81,7 +81,7 @@ export default function ContactSection() {
                   variant="outline" 
                   size="sm" 
                   className="border-primary text-primary hover:bg-primary hover:text-white text-sm px-4 py-2"
-                  onClick={() => window.open("https://facebook.com/2818studios", "_blank")}
+                  onClick={() => window.open("https://www.facebook.com/profile.php?id=61577416211600", "_blank")}
                 >
                   Facebook
                 </Button>
@@ -89,7 +89,7 @@ export default function ContactSection() {
                   variant="outline" 
                   size="sm" 
                   className="border-primary text-primary hover:bg-primary hover:text-white text-sm px-4 py-2"
-                  onClick={() => window.open("https://instagram.com/2818studios", "_blank")}
+                  onClick={() => window.open("https://www.instagram.com/2818_studios/", "_blank")}
                 >
                   Instagram
                 </Button>
@@ -166,7 +166,10 @@ export default function ContactSection() {
                 />
               </div>
 
-              <Button className="w-full btn-hero text-base sm:text-lg py-3 sm:py-4">
+              <Button 
+                className="w-full btn-hero text-base sm:text-lg py-3 sm:py-4"
+                onClick={() => window.open('https://order.2818studios.com/', '_blank')}
+              >
                 Book Your Session Today
               </Button>
             </form>

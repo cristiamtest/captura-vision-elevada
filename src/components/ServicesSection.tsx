@@ -133,12 +133,7 @@ export default function ServicesSection() {
             </p>
             <Button 
               className="btn-hero bg-white text-primary hover:bg-white/90 tracking-wide text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4"
-              onClick={() => {
-                const contactSection = document.getElementById('contact');
-                if (contactSection) {
-                  contactSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
+              onClick={() => window.open('https://order.2818studios.com/', '_blank')}
             >
               Book Your Session Today
             </Button>

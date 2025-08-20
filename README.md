@@ -1,24 +1,22 @@
-# Welcome to your Lovable project
+# 2818 Studios Media - Official Website
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/67b79d48-2506-4971-915b-55d1eb97654c
+Professional real estate photography and video services website for 2818 Studios Media.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- Professional portfolio showcase with Firebase Storage integration
+- Responsive design for all devices
+- Real estate photography and video services
+- Contact forms and booking system
+- Christian values-based business approach
 
-**Use Lovable**
+## Development
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/67b79d48-2506-4971-915b-55d1eb97654c) and start prompting.
+**Local Development**
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+To run this project locally, you need Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 Follow these steps:
 
@@ -62,12 +60,36 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/67b79d48-2506-4971-915b-55d1eb97654c) and click on Share -> Publish.
+This project can be deployed to various hosting platforms:
 
-## Can I connect a custom domain to my Lovable project?
+1. **Firebase Hosting** (Recommended)
+   ```sh
+   npm run build
+   firebase deploy
+   ```
 
-Yes, you can!
+2. **Vercel**
+   ```sh
+   npm run build
+   # Deploy via Vercel CLI or GitHub integration
+   ```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+3. **Netlify**
+   ```sh
+   npm run build
+   # Deploy via Netlify CLI or drag & drop
+   ```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Firebase Setup
+
+The project uses Firebase Storage for portfolio images. Make sure to:
+
+1. Configure Firebase credentials in `src/lib/firebase.ts`
+2. Deploy Storage rules: `firebase deploy --only storage`
+3. Upload images to the `/portfolio` folder in Firebase Storage
+
+## 2818 Studios Media
+
+Professional real estate photography and video services in the Washington D.C. metropolitan area.
+
+**Contact:** info@2818studios.com | (703) 582-2541

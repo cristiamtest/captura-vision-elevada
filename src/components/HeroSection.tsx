@@ -74,11 +74,8 @@ export default function HeroSection() {
   };
 
   const handleBookSession = () => {
-    // Scroll to contact section
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Redirect to booking page
+    window.open('https://order.2818studios.com/', '_blank');
   };
 
   const handleViewPortfolio = () => {
