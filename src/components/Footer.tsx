@@ -1,4 +1,4 @@
-import { Camera } from 'lucide-react';
+import { Camera, Facebook, Instagram } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -39,22 +39,47 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links & Social */}
           <div>
             <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Quick Links</h4>
-            <ul className="space-y-1.5 sm:space-y-2 text-background/70 text-sm sm:text-base">
+            <ul className="space-y-1.5 sm:space-y-2 text-background/70 text-sm sm:text-base mb-4">
               <li>About Us</li>
               <li>Portfolio</li>
               <li>Services</li>
               <li>Contact</li>
               <li>Book Session</li>
             </ul>
+            
+            {/* Social Media */}
+            <div className="space-y-2">
+              <h5 className="font-semibold text-sm sm:text-base">Follow Us</h5>
+              <div className="flex space-x-3">
+                <a 
+                  href="https://www.facebook.com/2818studios" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-background/70 hover:text-primary transition-colors"
+                >
+                  <Facebook className="w-4 h-4" />
+                  <span className="text-xs sm:text-sm">Facebook</span>
+                </a>
+                <a 
+                  href="https://www.instagram.com/2818studios" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-background/70 hover:text-primary transition-colors"
+                >
+                  <Instagram className="w-4 h-4" />
+                  <span className="text-xs sm:text-sm">Instagram</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="border-t border-background/20 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center">
           <p className="text-background/70 text-sm sm:text-base">
-            ©2024 2818 Studios Media. All rights reserved. | Founded by Michael Mejía
+            ©2025 2818 Studios Media. All rights reserved. | Founded by Michael Mejía
           </p>
           <p className="text-background/50 text-xs sm:text-sm mt-2">
             Professional real estate media services in the Washington D.C. metropolitan area
