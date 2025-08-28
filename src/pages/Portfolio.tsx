@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { storage, ref, listAll, getDownloadURL } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
-import { Grid3X3, Grid2X2, Rows3, X, ChevronLeft, ChevronRight, RefreshCw, AlertCircle } from 'lucide-react';
+import { Grid3X3, Grid2X2, Rows3, X, ChevronLeft, ChevronRight, RefreshCw, AlertCircle, Video, Play, Maximize } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import OptimizedImage from '@/components/OptimizedImage';
@@ -15,23 +15,45 @@ interface PortfolioImage {
   name?: string;
 }
 
+interface PortfolioVideo {
+  url: string;
+  id: string;
+  name?: string;
+}
+
 export default function Portfolio() {
   const [viewMode, setViewMode] = useState<ViewMode>('grid-3');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
+  
+  // Images state
   const [images, setImages] = useState<PortfolioImage[]>([]);
   const [allImages, setAllImages] = useState<PortfolioImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(6);
 
+  // Videos state
+  const [videos, setVideos] = useState<PortfolioVideo[]>([]);
+  const [allVideos, setAllVideos] = useState<PortfolioVideo[]>([]);
+  const [loadingVideos, setLoadingVideos] = useState(true);
+  const [errorVideos, setErrorVideos] = useState<string | null>(null);
+  const [visibleVideoCount, setVisibleVideoCount] = useState(6);
+
   useEffect(() => {
     loadImages();
+    loadVideos();
   }, []);
 
   // Update visible images when visibleCount changes
   useEffect(() => {
     setImages(allImages.slice(0, visibleCount));
   }, [allImages, visibleCount]);
+
+  // Update visible videos when visibleVideoCount changes
+  useEffect(() => {
+    setVideos(allVideos.slice(0, visibleVideoCount));
+  }, [allVideos, visibleVideoCount]);
 
   const loadImages = async () => {
     try {
@@ -111,6 +133,78 @@ export default function Portfolio() {
     loadImages();
   };
 
+  const loadVideos = async () => {
+    try {
+      setLoadingVideos(true);
+      setErrorVideos(null);
+      
+      console.log('🔄 Starting to load videos from Firebase Storage...');
+      
+      // Reference to the 'videos-portfolio' folder in Firebase Storage
+      const videosRef = ref(storage, 'videos-portfolio');
+      console.log('📁 Videos reference created:', videosRef.fullPath);
+      
+      // List all items in the videos-portfolio folder
+      const result = await listAll(videosRef);
+      console.log('📋 Videos listing result:', {
+        items: result.items.length,
+        prefixes: result.prefixes.length,
+        itemNames: result.items.map(item => item.name)
+      });
+      
+      if (result.items.length === 0) {
+        console.log('❌ No videos found in videos-portfolio folder');
+        setVideos([]);
+        setLoadingVideos(false);
+        return;
+      }
+      
+      // Get download URLs for all videos
+      const videoPromises = result.items.map(async (videoRef) => {
+        try {
+          const url = await getDownloadURL(videoRef);
+          
+          return {
+            id: videoRef.name,
+            url: url,
+            name: videoRef.name
+          };
+        } catch (urlError) {
+          console.error(`Error getting URL for ${videoRef.name}:`, urlError);
+          return null;
+        }
+      });
+      
+      const portfolioVideos = await Promise.all(videoPromises);
+      
+      // Filter out any failed downloads and sort by name
+      const validVideos = portfolioVideos
+        .filter((vid): vid is PortfolioVideo => vid !== null)
+        .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      
+      setAllVideos(validVideos);
+      setVideos(validVideos.slice(0, visibleVideoCount));
+      setLoadingVideos(false);
+      
+      console.log(`✅ Successfully loaded ${validVideos.length} videos from videos-portfolio:`, validVideos);
+      
+    } catch (error) {
+      console.error('❌ Error loading videos from Firebase Storage:', error);
+      console.error('Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        code: (error as any)?.code,
+        stack: error instanceof Error ? error.stack : undefined
+      });
+      setErrorVideos(`Failed to load videos: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setVideos([]);
+      setLoadingVideos(false);
+    }
+  };
+
+  const refreshVideos = () => {
+    loadVideos();
+  };
+
   const getGridClass = () => {
     switch (viewMode) {
       case 'grid-2': return 'grid-cols-1 md:grid-cols-2';
@@ -137,6 +231,24 @@ export default function Portfolio() {
       : (selectedImage - 1 + images.length) % images.length;
     
     setSelectedImage(newIndex);
+  };
+
+  const openVideoLightbox = (index: number) => {
+    setSelectedVideo(index);
+  };
+
+  const closeVideoLightbox = () => {
+    setSelectedVideo(null);
+  };
+
+  const navigateVideo = (direction: 'prev' | 'next') => {
+    if (selectedVideo === null) return;
+    
+    const newIndex = direction === 'next' 
+      ? (selectedVideo + 1) % videos.length
+      : (selectedVideo - 1 + videos.length) % videos.length;
+    
+    setSelectedVideo(newIndex);
   };
 
   const handleBookSession = () => {
@@ -293,6 +405,153 @@ export default function Portfolio() {
               </div>
             )}
 
+            {/* Videos Section */}
+            <div className="mt-20 pt-16 border-t border-border/20">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 tracking-[0.2em] flex items-center justify-center gap-4">
+                  <Video className="w-8 h-8 sm:w-12 sm:h-12 text-primary" />
+                  V I D E O S
+                </h2>
+                <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+                  Professional video tours and cinematic showcases that bring properties to life with immersive experiences.
+                </p>
+              </div>
+
+              {/* Video Controls */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+                <div className="flex items-center space-x-2 bg-muted/30 rounded-xl p-2">
+                  <Button
+                    variant={viewMode === 'grid-2' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setViewMode('grid-2')}
+                    className="p-2"
+                  >
+                    <Grid2X2 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant={viewMode === 'grid-3' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setViewMode('grid-3')}
+                    className="p-2"
+                  >
+                    <Grid3X3 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant={viewMode === 'grid-4' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setViewMode('grid-4')}
+                    className="p-2"
+                  >
+                    <Rows3 className="w-4 h-4" />
+                  </Button>
+                </div>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={refreshVideos}
+                  disabled={loadingVideos}
+                  className="flex items-center space-x-2"
+                >
+                  <RefreshCw className={`w-4 h-4 ${loadingVideos ? 'animate-spin' : ''}`} />
+                  <span>Refresh Videos</span>
+                </Button>
+              </div>
+
+              {/* Video Count Display */}
+              {!loadingVideos && !errorVideos && (
+                <div className="text-center mb-6">
+                  <p className="text-muted-foreground">
+                    Showing {videos.length} of {allVideos.length} {allVideos.length === 1 ? 'video' : 'videos'}
+                  </p>
+                </div>
+              )}
+
+              {/* Video Error State */}
+              {errorVideos && (
+                <div className="text-center py-12">
+                  <div className="flex flex-col items-center space-y-4">
+                    <AlertCircle className="w-12 h-12 text-destructive" />
+                    <h3 className="text-lg font-semibold text-foreground">Failed to Load Videos</h3>
+                    <p className="text-muted-foreground max-w-md">{errorVideos}</p>
+                    <Button onClick={refreshVideos} className="btn-hero">
+                      Try Again
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Video Loading State */}
+              {loadingVideos && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="aspect-video bg-muted/30 rounded-xl animate-pulse" />
+                  ))}
+                </div>
+              )}
+
+              {/* Video Empty State */}
+              {!loadingVideos && !errorVideos && videos.length === 0 && (
+                <div className="text-center py-12">
+                  <div className="flex flex-col items-center space-y-4">
+                    <Video className="w-12 h-12 text-muted-foreground" />
+                    <h3 className="text-lg font-semibold text-foreground">No Videos Found</h3>
+                    <p className="text-muted-foreground max-w-md">
+                      No videos were found in the videos-portfolio folder. Upload some videos to Firebase Storage 
+                      in the "videos-portfolio" folder to see them here.
+                    </p>
+                    <Button onClick={refreshVideos} variant="outline">
+                      Refresh
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Video Gallery */}
+              {!loadingVideos && !errorVideos && videos.length > 0 && (
+                <div className={`grid ${getGridClass()} gap-6`}>
+                  {videos.map((video, index) => (
+                    <div
+                      key={video.id}
+                      className="group cursor-pointer aspect-video overflow-hidden rounded-2xl bg-muted/30 hover:shadow-glow transition-all duration-500 relative"
+                      onClick={() => openVideoLightbox(index)}
+                    >
+                      <video
+                        src={video.url}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        preload="metadata"
+                        muted
+                        playsInline
+                      />
+                      {/* Play Button Overlay */}
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="bg-primary/90 backdrop-blur-sm rounded-full p-4 transform group-hover:scale-110 transition-transform duration-300">
+                          <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
+                        </div>
+                      </div>
+                      {/* Video Duration Overlay */}
+                      <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                        Video
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Load More Videos Button */}
+              {!loadingVideos && !errorVideos && allVideos.length > videos.length && (
+                <div className="text-center mt-12">
+                  <Button
+                    onClick={() => setVisibleVideoCount(prev => Math.min(prev + 6, allVideos.length))}
+                    variant="outline"
+                    className="px-8 py-3 text-lg"
+                  >
+                    Load More Videos ({allVideos.length - videos.length} remaining)
+                  </Button>
+                </div>
+              )}
+            </div>
+
             {/* Bottom CTA */}
             <div className="text-center mt-16">
               <div className="bg-gradient-hero rounded-2xl p-8 lg:p-12">
@@ -314,7 +573,7 @@ export default function Portfolio() {
         </section>
       </main>
 
-      {/* Lightbox */}
+      {/* Image Lightbox */}
       {selectedImage !== null && (
         <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4">
           {/* Close Button */}
@@ -366,6 +625,102 @@ export default function Portfolio() {
           {/* Image Counter */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/50 px-3 py-1 rounded-full">
             {selectedImage + 1} / {images.length}
+          </div>
+        </div>
+      )}
+
+      {/* Video Lightbox */}
+      {selectedVideo !== null && (
+        <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4">
+          {/* Close Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={closeVideoLightbox}
+            className="absolute top-4 right-4 z-10 text-white hover:bg-white/10 p-2"
+          >
+            <X className="w-6 h-6" />
+          </Button>
+
+          {/* Fullscreen Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              const video = document.querySelector('.lightbox-video') as HTMLVideoElement;
+              if (video) {
+                if (video.requestFullscreen) {
+                  video.requestFullscreen();
+                } else if ((video as any).webkitRequestFullscreen) {
+                  (video as any).webkitRequestFullscreen();
+                } else if ((video as any).msRequestFullscreen) {
+                  (video as any).msRequestFullscreen();
+                }
+              }
+            }}
+            className="absolute top-4 right-16 z-10 text-white hover:bg-white/10 p-2"
+          >
+            <Maximize className="w-6 h-6" />
+          </Button>
+
+          {/* Book Session Button in Video Lightbox */}
+          <Button
+            className="absolute top-4 left-4 z-10 btn-hero text-sm px-4 py-2"
+            onClick={handleBookSession}
+          >
+            Book Session
+          </Button>
+
+          {/* Navigation Buttons */}
+          {videos.length > 1 && (
+            <>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigateVideo('prev')}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 p-3"
+              >
+                <ChevronLeft className="w-8 h-8" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigateVideo('next')}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 p-3"
+              >
+                <ChevronRight className="w-8 h-8" />
+              </Button>
+            </>
+          )}
+
+          {/* Main Video */}
+          <div className="max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center">
+            <video
+              src={videos[selectedVideo].url}
+              className="lightbox-video max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+              controls
+              autoPlay
+              playsInline
+              controlsList="nodownload"
+              style={{
+                maxWidth: '100%',
+                maxHeight: '100%',
+                width: 'auto',
+                height: 'auto'
+              }}
+            />
+          </div>
+
+          {/* Video Counter and Info */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-4">
+            <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-full">
+              {selectedVideo + 1} / {videos.length}
+            </div>
+            <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-full flex items-center space-x-2">
+              <Video className="w-4 h-4" />
+              <span>{videos[selectedVideo].name}</span>
+            </div>
           </div>
         </div>
       )}

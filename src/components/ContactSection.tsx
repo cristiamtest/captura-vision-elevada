@@ -1,4 +1,4 @@
-import { Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
+import { Phone, Mail, MessageCircle, MapPin, Facebook, Instagram } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -80,18 +80,20 @@ export default function ContactSection() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="border-primary text-primary hover:bg-primary hover:text-white text-sm px-4 py-2"
+                  className="border-primary text-primary hover:bg-primary hover:text-white text-sm px-4 py-2 flex items-center space-x-2"
                   onClick={() => window.open("https://www.facebook.com/profile.php?id=61577416211600", "_blank")}
                 >
-                  Facebook
+                  <Facebook className="w-4 h-4" />
+                  <span>Facebook</span>
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="border-primary text-primary hover:bg-primary hover:text-white text-sm px-4 py-2"
+                  className="border-primary text-primary hover:bg-primary hover:text-white text-sm px-4 py-2 flex items-center space-x-2"
                   onClick={() => window.open("https://www.instagram.com/2818_studios/", "_blank")}
                 >
-                  Instagram
+                  <Instagram className="w-4 h-4" />
+                  <span>Instagram</span>
                 </Button>
               </div>
             </div>

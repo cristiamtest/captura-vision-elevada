@@ -86,11 +86,24 @@ export default function HeroSection() {
     <section className="relative h-screen overflow-hidden bg-dark-bg">
       {/* Logo in top right corner */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 z-30">
-        <img 
-          src={logoDark} 
-          alt="2818 Studios Real Estate Media" 
-          className="h-12 sm:h-14 lg:h-16 w-auto object-contain drop-shadow-lg"
-        />
+        <a 
+          href="/" 
+          className="cursor-pointer block"
+          onClick={(e) => {
+            e.preventDefault();
+            if (window.location.pathname !== '/') {
+              window.location.href = '/';
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+        >
+          <img 
+            src={logoDark} 
+            alt="2818 Studios Real Estate Media" 
+            className="h-12 sm:h-14 lg:h-16 w-auto object-contain drop-shadow-lg hover:opacity-80 transition-opacity duration-200"
+          />
+        </a>
       </div>
 
       {/* Background Images */}

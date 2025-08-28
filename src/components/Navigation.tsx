@@ -22,11 +22,24 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-20 px-4 sm:px-6 lg:px-0">
           {/* Logo */}
           <div className="flex items-center">
-            <img 
-              src={logoDark} 
-              alt="2818 Studios Real Estate Media" 
-              className="h-20 sm:h-18 w-auto object-contain"
-            />
+            <a 
+              href="/" 
+              className="cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                if (window.location.pathname !== '/') {
+                  window.location.href = '/';
+                } else {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+            >
+              <img 
+                src={logoDark} 
+                alt="2818 Studios Real Estate Media" 
+                className="h-20 sm:h-18 w-auto object-contain hover:opacity-80 transition-opacity duration-200"
+              />
+            </a>
           </div>
 
           {/* Desktop Navigation */}

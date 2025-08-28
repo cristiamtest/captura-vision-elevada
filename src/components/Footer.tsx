@@ -7,10 +7,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {/* Brand */}
           <div className="space-y-3 sm:space-y-4 col-span-1 sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center space-x-2">
+            <a 
+              href="/" 
+              className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity duration-200"
+              onClick={(e) => {
+                e.preventDefault();
+                if (window.location.pathname !== '/') {
+                  window.location.href = '/';
+                } else {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+            >
               <Camera className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
               <span className="text-lg sm:text-xl lg:text-2xl font-bold">2818 Studios Media</span>
-            </div>
+            </a>
             <p className="text-background/70 text-sm sm:text-base leading-relaxed">
               A distinctively Christian media company serving the DMV area with professional real estate photography, video, and 3D tours. Excellence captured and delivered.
             </p>
@@ -54,7 +65,7 @@ export default function Footer() {
 
         <div className="border-t border-background/20 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center">
           <p className="text-background/70 text-sm sm:text-base">
-            ©2024 2818 Studios Media. All rights reserved. | Founded by Michael Mejía
+            ©2025 2818 Studios Media. All rights reserved. | Founded by Michael Mejía
           </p>
           <p className="text-background/50 text-xs sm:text-sm mt-2">
             Professional real estate media services in the Washington D.C. metropolitan area
