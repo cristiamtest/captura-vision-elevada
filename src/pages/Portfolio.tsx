@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { storage, ref, listAll, getDownloadURL } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
-import { Grid3X3, Grid2X2, Rows3, X, ChevronLeft, ChevronRight, RefreshCw, AlertCircle, Video, Play, Maximize } from 'lucide-react';
+import { Grid3X3, Grid2X2, Rows3, X, ChevronLeft, ChevronRight, RefreshCw, AlertCircle, Video, Play, Maximize, FileText } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import OptimizedImage from '@/components/OptimizedImage';
@@ -25,6 +25,7 @@ export default function Portfolio() {
   const [viewMode, setViewMode] = useState<ViewMode>('grid-3');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
+  const [selectedFloorPlan, setSelectedFloorPlan] = useState<number | null>(null);
   
   // Images state
   const [images, setImages] = useState<PortfolioImage[]>([]);
@@ -40,9 +41,17 @@ export default function Portfolio() {
   const [errorVideos, setErrorVideos] = useState<string | null>(null);
   const [visibleVideoCount, setVisibleVideoCount] = useState(6);
 
+  // Floor Plans state
+  const [floorPlans, setFloorPlans] = useState<PortfolioImage[]>([]);
+  const [allFloorPlans, setAllFloorPlans] = useState<PortfolioImage[]>([]);
+  const [loadingFloorPlans, setLoadingFloorPlans] = useState(true);
+  const [errorFloorPlans, setErrorFloorPlans] = useState<string | null>(null);
+  const [visibleFloorPlanCount, setVisibleFloorPlanCount] = useState(6);
+
   useEffect(() => {
     loadImages();
     loadVideos();
+    loadFloorPlans();
   }, []);
 
   // Update visible images when visibleCount changes
@@ -54,6 +63,11 @@ export default function Portfolio() {
   useEffect(() => {
     setVideos(allVideos.slice(0, visibleVideoCount));
   }, [allVideos, visibleVideoCount]);
+
+  // Update visible floor plans when visibleFloorPlanCount changes
+  useEffect(() => {
+    setFloorPlans(allFloorPlans.slice(0, visibleFloorPlanCount));
+  }, [allFloorPlans, visibleFloorPlanCount]);
 
   const loadImages = async () => {
     try {
@@ -205,6 +219,84 @@ export default function Portfolio() {
     loadVideos();
   };
 
+  const loadFloorPlans = async () => {
+    try {
+      setLoadingFloorPlans(true);
+      setErrorFloorPlans(null);
+      
+      console.log('🔄 Starting to load floor plans from Firebase Storage...');
+      
+      // Reference to the 'floor-plans-portfolio' folder in Firebase Storage
+      const floorPlansRef = ref(storage, 'floor-plans-portfolio');
+      console.log('📁 Floor Plans reference created:', floorPlansRef.fullPath);
+      
+      // List all items in the floor-plans-portfolio folder
+      const result = await listAll(floorPlansRef);
+      console.log('📋 Floor Plans listing result:', {
+        items: result.items.length,
+        prefixes: result.prefixes.length,
+        itemNames: result.items.map(item => item.name)
+      });
+      
+      if (result.items.length === 0) {
+        console.log('❌ No floor plans found in floor-plans-portfolio folder');
+        setFloorPlans([]);
+        setLoadingFloorPlans(false);
+        return;
+      }
+      
+      // Get download URLs for all floor plans with optimization
+      const floorPlanPromises = result.items.map(async (floorPlanRef) => {
+        try {
+          const url = await getDownloadURL(floorPlanRef);
+          
+          // Create optimized URL for faster loading (smaller size for gallery)
+          const optimizedUrl = url.includes('?') 
+            ? `${url}&w=800&h=600&fit=crop&fm=webp&q=80`
+            : `${url}?w=800&h=600&fit=crop&fm=webp&q=80`;
+          
+          return {
+            id: floorPlanRef.name,
+            url: optimizedUrl,
+            originalUrl: url, // Keep original for lightbox
+            name: floorPlanRef.name
+          };
+        } catch (urlError) {
+          console.error(`Error getting URL for ${floorPlanRef.name}:`, urlError);
+          return null;
+        }
+      });
+      
+      const portfolioFloorPlans = await Promise.all(floorPlanPromises);
+      
+      // Filter out any failed downloads and sort by name
+      const validFloorPlans = portfolioFloorPlans
+        .filter((fp): fp is PortfolioImage => fp !== null)
+        .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      
+      setAllFloorPlans(validFloorPlans);
+      setFloorPlans(validFloorPlans.slice(0, visibleFloorPlanCount));
+      setLoadingFloorPlans(false);
+      
+      console.log(`✅ Successfully loaded ${validFloorPlans.length} floor plans from floor-plans-portfolio:`, validFloorPlans);
+      
+    } catch (error) {
+      console.error('❌ Error loading floor plans from Firebase Storage:', error);
+      console.error('Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        code: (error as any)?.code,
+        stack: error instanceof Error ? error.stack : undefined
+      });
+      setErrorFloorPlans(`Failed to load floor plans: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setFloorPlans([]);
+      setLoadingFloorPlans(false);
+    }
+  };
+
+  const refreshFloorPlans = () => {
+    loadFloorPlans();
+  };
+
   const getGridClass = () => {
     switch (viewMode) {
       case 'grid-2': return 'grid-cols-1 md:grid-cols-2';
@@ -249,6 +341,24 @@ export default function Portfolio() {
       : (selectedVideo - 1 + videos.length) % videos.length;
     
     setSelectedVideo(newIndex);
+  };
+
+  const openFloorPlanLightbox = (index: number) => {
+    setSelectedFloorPlan(index);
+  };
+
+  const closeFloorPlanLightbox = () => {
+    setSelectedFloorPlan(null);
+  };
+
+  const navigateFloorPlan = (direction: 'prev' | 'next') => {
+    if (selectedFloorPlan === null) return;
+    
+    const newIndex = direction === 'next' 
+      ? (selectedFloorPlan + 1) % floorPlans.length
+      : (selectedFloorPlan - 1 + floorPlans.length) % floorPlans.length;
+    
+    setSelectedFloorPlan(newIndex);
   };
 
   const handleBookSession = () => {
@@ -552,6 +662,146 @@ export default function Portfolio() {
               )}
             </div>
 
+            {/* Floor Plans Section */}
+            <div className="mt-20 pt-16 border-t border-border/20">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 tracking-[0.2em] flex items-center justify-center gap-4">
+                  <FileText className="w-8 h-8 sm:w-12 sm:h-12 text-primary" />
+                  F L O O R &nbsp; P L A N S
+                </h2>
+                <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+                  Detailed architectural floor plans that help buyers visualize space layout and flow throughout the property.
+                </p>
+              </div>
+
+              {/* Floor Plans Controls */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+                <div className="flex items-center space-x-2 bg-muted/30 rounded-xl p-2">
+                  <Button
+                    variant={viewMode === 'grid-2' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setViewMode('grid-2')}
+                    className="p-2"
+                  >
+                    <Grid2X2 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant={viewMode === 'grid-3' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setViewMode('grid-3')}
+                    className="p-2"
+                  >
+                    <Grid3X3 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant={viewMode === 'grid-4' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setViewMode('grid-4')}
+                    className="p-2"
+                  >
+                    <Rows3 className="w-4 h-4" />
+                  </Button>
+                </div>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={refreshFloorPlans}
+                  disabled={loadingFloorPlans}
+                  className="flex items-center space-x-2"
+                >
+                  <RefreshCw className={`w-4 h-4 ${loadingFloorPlans ? 'animate-spin' : ''}`} />
+                  <span>Refresh Floor Plans</span>
+                </Button>
+              </div>
+
+              {/* Floor Plans Count Display */}
+              {!loadingFloorPlans && !errorFloorPlans && (
+                <div className="text-center mb-6">
+                  <p className="text-muted-foreground">
+                    Showing {floorPlans.length} of {allFloorPlans.length} {allFloorPlans.length === 1 ? 'floor plan' : 'floor plans'}
+                  </p>
+                </div>
+              )}
+
+              {/* Floor Plans Error State */}
+              {errorFloorPlans && (
+                <div className="text-center py-12">
+                  <div className="flex flex-col items-center space-y-4">
+                    <AlertCircle className="w-12 h-12 text-destructive" />
+                    <h3 className="text-lg font-semibold text-foreground">Failed to Load Floor Plans</h3>
+                    <p className="text-muted-foreground max-w-md">{errorFloorPlans}</p>
+                    <Button onClick={refreshFloorPlans} className="btn-hero">
+                      Try Again
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Floor Plans Loading State */}
+              {loadingFloorPlans && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="aspect-[4/3] bg-muted/30 rounded-xl animate-pulse" />
+                  ))}
+                </div>
+              )}
+
+              {/* Floor Plans Empty State */}
+              {!loadingFloorPlans && !errorFloorPlans && floorPlans.length === 0 && (
+                <div className="text-center py-12">
+                  <div className="flex flex-col items-center space-y-4">
+                    <FileText className="w-12 h-12 text-muted-foreground" />
+                    <h3 className="text-lg font-semibold text-foreground">No Floor Plans Found</h3>
+                    <p className="text-muted-foreground max-w-md">
+                      No floor plans were found in the floor-plans-portfolio folder. Upload some floor plan images to Firebase Storage 
+                      in the "floor-plans-portfolio" folder to see them here.
+                    </p>
+                    <Button onClick={refreshFloorPlans} variant="outline">
+                      Refresh
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Floor Plans Gallery */}
+              {!loadingFloorPlans && !errorFloorPlans && floorPlans.length > 0 && (
+                <div className={viewMode === 'masonry' ? getGridClass() : `grid ${getGridClass()} gap-6`}>
+                  {floorPlans.map((floorPlan, index) => (
+                    <div
+                      key={floorPlan.id}
+                      className={`group cursor-pointer ${viewMode === 'masonry' ? 'break-inside-avoid mb-6' : 'aspect-[4/3]'} overflow-hidden rounded-2xl bg-muted/30 hover:shadow-glow transition-all duration-500 relative`}
+                      onClick={() => openFloorPlanLightbox(index)}
+                    >
+                      <OptimizedImage
+                        src={floorPlan.url}
+                        alt={`Floor plan - ${floorPlan.name}`}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        index={index}
+                      />
+                      {/* Floor Plan Icon Overlay */}
+                      <div className="absolute top-2 right-2 bg-primary/90 backdrop-blur-sm rounded-full p-2 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                        <FileText className="w-4 h-4 text-white" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Load More Floor Plans Button */}
+              {!loadingFloorPlans && !errorFloorPlans && allFloorPlans.length > floorPlans.length && (
+                <div className="text-center mt-12">
+                  <Button
+                    onClick={() => setVisibleFloorPlanCount(prev => Math.min(prev + 6, allFloorPlans.length))}
+                    variant="outline"
+                    className="px-8 py-3 text-lg"
+                  >
+                    Load More Floor Plans ({allFloorPlans.length - floorPlans.length} remaining)
+                  </Button>
+                </div>
+              )}
+            </div>
+
             {/* Bottom CTA */}
             <div className="text-center mt-16">
               <div className="bg-gradient-hero rounded-2xl p-8 lg:p-12">
@@ -720,6 +970,72 @@ export default function Portfolio() {
             <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-full flex items-center space-x-2">
               <Video className="w-4 h-4" />
               <span>{videos[selectedVideo].name}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Floor Plans Lightbox */}
+      {selectedFloorPlan !== null && (
+        <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4">
+          {/* Close Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={closeFloorPlanLightbox}
+            className="absolute top-4 right-4 z-10 text-white hover:bg-white/10 p-2"
+          >
+            <X className="w-6 h-6" />
+          </Button>
+
+          {/* Book Session Button in Floor Plan Lightbox */}
+          <Button
+            className="absolute top-4 left-4 z-10 btn-hero text-sm px-4 py-2"
+            onClick={handleBookSession}
+          >
+            Book Session
+          </Button>
+
+          {/* Navigation Buttons */}
+          {floorPlans.length > 1 && (
+            <>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigateFloorPlan('prev')}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 p-3"
+              >
+                <ChevronLeft className="w-8 h-8" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigateFloorPlan('next')}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 p-3"
+              >
+                <ChevronRight className="w-8 h-8" />
+              </Button>
+            </>
+          )}
+
+          {/* Main Floor Plan */}
+          <div className="max-w-6xl max-h-[90vh] w-full h-full flex items-center justify-center">
+            <img
+              src={floorPlans[selectedFloorPlan].originalUrl || floorPlans[selectedFloorPlan].url}
+              alt="Floor plan"
+              className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+            />
+          </div>
+
+          {/* Floor Plan Counter and Info */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-4">
+            <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-full">
+              {selectedFloorPlan + 1} / {floorPlans.length}
+            </div>
+            <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-full flex items-center space-x-2">
+              <FileText className="w-4 h-4" />
+              <span>{floorPlans[selectedFloorPlan].name}</span>
             </div>
           </div>
         </div>
