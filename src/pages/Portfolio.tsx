@@ -379,8 +379,7 @@ export default function Portfolio() {
         {/* Header Section */}
         <section className="section-padding relative">
           <div className="absolute inset-0 bg-gradient-2 opacity-80"></div>
-          <div className="relative">
-          <div className="container-custom px-4 sm:px-6 lg:px-12">
+          <div className="relative container-custom px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 tracking-[0.2em]">
                 P O R T F O L I O
