@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-1">
       <Navigation />
       
       <main>
@@ -17,24 +17,39 @@ const Index = () => {
           <HeroSection />
         </section>
         
-        <section id="services">
-          <ServicesSection />
+        <section id="services" className="relative">
+          <div className="absolute inset-0 bg-gradient-2 opacity-80"></div>
+          <div className="relative">
+            <ServicesSection />
+          </div>
         </section>
         
-        <section id="about">
-          <AboutSection />
+        <section id="about" className="relative">
+          <div className="absolute inset-0 bg-gradient-4 opacity-80"></div>
+          <div className="relative">
+            <AboutSection />
+          </div>
         </section>
         
-        <section id="process">
-          <ProcessSection />
+        <section id="process" className="relative">
+          <div className="absolute inset-0 bg-gradient-1 opacity-80"></div>
+          <div className="relative">
+            <ProcessSection />
+          </div>
         </section>
         
-        <section id="faq">
-          <FAQSection />
+        <section id="faq" className="relative">
+          <div className="absolute inset-0 bg-gradient-3 opacity-80"></div>
+          <div className="relative">
+            <FAQSection />
+          </div>
         </section>
         
-        <section id="contact">
-          <ContactSection />
+        <section id="contact" className="relative">
+          <div className="absolute inset-0 bg-gradient-2 opacity-80"></div>
+          <div className="relative">
+            <ContactSection />
+          </div>
         </section>
       </main>
       

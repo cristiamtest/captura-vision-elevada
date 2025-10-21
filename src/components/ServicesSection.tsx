@@ -54,20 +54,20 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding">
       <div className="container-custom px-4 sm:px-6 lg:px-12">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-12 sm:mb-16 space-y-6 sm:space-y-0">
           <div>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-wider leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-wider leading-tight drop-shadow-lg">
               SELECTED
               <br />
-              <span className="text-brand-orange">SERVICES</span>
+              <span className="text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.5)]">SERVICES</span>
             </h2>
           </div>
           <Button 
             variant="ghost" 
-            className="text-muted-foreground hover:text-foreground transition-colors group mb-0 sm:mb-4 self-start sm:self-auto text-sm sm:text-base"
+            className="glass-button text-white hover:text-white transition-all group mb-0 sm:mb-4 self-start sm:self-auto text-sm sm:text-base"
             onClick={() => window.location.href = '/portfolio'}
           >
             VIEW PORTFOLIO
@@ -80,7 +80,7 @@ export default function ServicesSection() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-2xl bg-muted/30 hover:shadow-glow transition-all duration-500 cursor-pointer"
+              className="group relative overflow-hidden rounded-3xl glass-card hover:shadow-glow transition-all duration-500 cursor-pointer transform hover:scale-[1.02]"
               style={{ animationDelay: `${index * 0.1}s` }}
               onClick={() => window.location.href = '/portfolio'}
             >
@@ -91,12 +91,12 @@ export default function ServicesSection() {
                   alt={service.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
+                <div className="absolute inset-0 bg-gradient-overlay" />
               </div>
               
-              {/* Content Overlay */}
+              {/* Content Overlay with glass effect */}
               <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-12">
-                <div className="transform transition-transform duration-300 group-hover:translate-y-[-8px]">
+                <div className="glass-card rounded-2xl p-6 transform transition-all duration-300 group-hover:translate-y-[-8px]">
                   <div className="text-xs sm:text-sm font-medium text-brand-orange mb-2 tracking-wider">
                     {service.subtitle}
                   </div>

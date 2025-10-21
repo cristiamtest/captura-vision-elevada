@@ -121,8 +121,10 @@ export default function Portfolio() {
       
       // Filter out any failed downloads and sort by name
       const validImages = portfolioImages
-        .filter((img): img is PortfolioImage => img !== null)
-        .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+        .filter((img): img is { id: string; url: string; originalUrl: string; name: string } => 
+          img !== null && !!img.url && !!img.originalUrl && !!img.name
+        )
+        .sort((a, b) => a.name.localeCompare(b.name));
       
       setAllImages(validImages);
       setImages(validImages.slice(0, visibleCount));
@@ -193,8 +195,10 @@ export default function Portfolio() {
       
       // Filter out any failed downloads and sort by name
       const validVideos = portfolioVideos
-        .filter((vid): vid is PortfolioVideo => vid !== null)
-        .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+        .filter((vid): vid is { id: string; url: string; name: string } => 
+          vid !== null && !!vid.url && !!vid.name
+        )
+        .sort((a, b) => a.name.localeCompare(b.name));
       
       setAllVideos(validVideos);
       setVideos(validVideos.slice(0, visibleVideoCount));
@@ -271,8 +275,10 @@ export default function Portfolio() {
       
       // Filter out any failed downloads and sort by name
       const validFloorPlans = portfolioFloorPlans
-        .filter((fp): fp is PortfolioImage => fp !== null)
-        .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+        .filter((fp): fp is { id: string; url: string; originalUrl: string; name: string } => 
+          fp !== null && !!fp.url && !!fp.originalUrl && !!fp.name
+        )
+        .sort((a, b) => a.name.localeCompare(b.name));
       
       setAllFloorPlans(validFloorPlans);
       setFloorPlans(validFloorPlans.slice(0, visibleFloorPlanCount));
@@ -366,12 +372,14 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-1">
       <Navigation />
       
       <main className="pt-20">
         {/* Header Section */}
-        <section className="section-padding bg-background">
+        <section className="section-padding relative">
+          <div className="absolute inset-0 bg-gradient-2 opacity-80"></div>
+          <div className="relative">
           <div className="container-custom px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 tracking-[0.2em]">

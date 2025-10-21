@@ -17,7 +17,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-border/50 shadow-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
       <div className="container-custom">
         <div className="flex items-center justify-between h-20 px-4 sm:px-6 lg:px-0">
           {/* Logo */}
@@ -86,7 +86,7 @@ export default function Navigation() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-border/50 bg-white">
+          <div className="md:hidden border-t border-white/20 glass">
             <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
                 <a
