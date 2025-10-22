@@ -114,21 +114,7 @@ export default {
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
 				'gradient-dark': 'var(--gradient-dark)',
-				'gradient-overlay': 'var(--gradient-overlay)',
-				'gradient-glass': 'var(--gradient-glass)',
-				'gradient-1': 'var(--bg-gradient-1)',
-				'gradient-2': 'var(--bg-gradient-2)',
-				'gradient-3': 'var(--bg-gradient-3)',
-				'gradient-4': 'var(--bg-gradient-4)'
-			},
-			backdropBlur: {
-				xs: '2px',
-				sm: '4px',
-				md: '12px',
-				lg: '16px',
-				xl: '24px',
-				'2xl': '40px',
-				'3xl': '64px',
+				'gradient-overlay': 'var(--gradient-overlay)'
 			}
 		}
 	},

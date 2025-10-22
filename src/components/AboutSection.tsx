@@ -25,29 +25,29 @@ const values = [
 
 export default function AboutSection() {
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-dark-bg text-dark-fg">
       <div className="container-custom px-4 sm:px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Content */}
           <div className="space-y-6 sm:space-y-8">
-            <div className="glass-card rounded-3xl p-8 lg:p-10">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-white drop-shadow-lg">
-                About <span className="text-primary drop-shadow-glow">2818 Studios Media</span>
+            <div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+                About <span className="gradient-text">2818 Studios Media</span>
               </h2>
-              <p className="text-lg sm:text-xl text-white/90 leading-relaxed mb-4 sm:mb-6">
+              <p className="text-lg sm:text-xl text-dark-fg/80 leading-relaxed mb-4 sm:mb-6">
                 Founded and led by Michael Mejía, we are a distinctively Christian media company serving 
                 the Washington D.C. metropolitan area, including Maryland and Virginia. With less than a year 
                 in formal operation, we've established ourselves as a reliable and professional service.
               </p>
-              <p className="text-base sm:text-lg text-white/80 leading-relaxed">
+              <p className="text-base sm:text-lg text-dark-fg/70 leading-relaxed">
                 What sets us apart is our commitment to biblical principles - we aim to honor our clients 
                 in both the products we deliver and how we treat them, with ethics, integrity, and respect 
                 as non-negotiable elements in every business relationship.
               </p>
             </div>
 
-            <div className="glass-card rounded-3xl p-8 space-y-3 sm:space-y-4">
-              <h3 className="text-xl sm:text-2xl font-semibold text-primary drop-shadow-glow">Our Mission</h3>
+            <div className="space-y-3 sm:space-y-4">
+              <h3 className="text-xl sm:text-2xl font-semibold text-primary">Our Mission</h3>
               <p className="text-base sm:text-lg text-dark-fg/70 leading-relaxed">
                 To serve real estate professionals with excellence, helping them achieve 
                 their sales goals through high-quality visual content while maintaining 
