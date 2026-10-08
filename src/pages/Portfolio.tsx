@@ -5,6 +5,8 @@ import { Grid3X3, Grid2X2, Rows3, X, ChevronLeft, ChevronRight, RefreshCw, Alert
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import OptimizedImage from '@/components/OptimizedImage';
+import { fetchMedia, MediaItem } from '@/lib/media';
+import MoreWork from '@/components/MoreWork';
 
 type ViewMode = 'grid-2' | 'grid-3' | 'grid-4' | 'masonry';
 
@@ -29,24 +31,39 @@ export default function Portfolio() {
   
   // Images state
   const [images, setImages] = useState<PortfolioImage[]>([]);
-  const [allImages, setAllImages] = useState<PortfolioImage[]>([]);
+  const [firebaseImages, setAllImages] = useState<PortfolioImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(6);
 
   // Videos state
   const [videos, setVideos] = useState<PortfolioVideo[]>([]);
-  const [allVideos, setAllVideos] = useState<PortfolioVideo[]>([]);
+  const [firebaseVideos, setAllVideos] = useState<PortfolioVideo[]>([]);
   const [loadingVideos, setLoadingVideos] = useState(true);
   const [errorVideos, setErrorVideos] = useState<string | null>(null);
   const [visibleVideoCount, setVisibleVideoCount] = useState(6);
 
   // Floor Plans state
   const [floorPlans, setFloorPlans] = useState<PortfolioImage[]>([]);
-  const [allFloorPlans, setAllFloorPlans] = useState<PortfolioImage[]>([]);
+  const [firebaseFloorPlans, setAllFloorPlans] = useState<PortfolioImage[]>([]);
   const [loadingFloorPlans, setLoadingFloorPlans] = useState(true);
   const [errorFloorPlans, setErrorFloorPlans] = useState<string | null>(null);
   const [visibleFloorPlanCount, setVisibleFloorPlanCount] = useState(6);
+
+  const [cloud, setCloud] = useState<MediaItem[]>([]);
+  useEffect(() => {
+    fetchMedia().then(setCloud).catch(() => setCloud([]));
+  }, []);
+  const toImg = (m: MediaItem): PortfolioImage => ({ id: m.id, url: m.url, originalUrl: m.url, name: m.title || '' });
+  const cloudPhotos = cloud.filter(m => m.category === 'photos' && m.media_type === 'image').map(toImg);
+  const cloudPlans = cloud.filter(m => m.category === 'floor-plans' && m.media_type === 'image').map(toImg);
+  const cloudVideos = cloud.filter(m => (m.category === 'videos' || m.category === 'aerial') && m.media_type === 'video').map(m => ({ id: m.id, url: m.url, name: m.title || '' }));
+  const allImages = [...cloudPhotos, ...firebaseImages];
+  const allVideos = [...cloudVideos, ...firebaseVideos];
+  const allFloorPlans = [...cloudPlans, ...firebaseFloorPlans];
+  const hasCloudImages = cloudPhotos.length > 0;
+  const hasCloudVideos = cloudVideos.length > 0;
+  const hasCloudPlans = cloudPlans.length > 0;
 
   useEffect(() => {
     loadImages();
@@ -57,17 +74,17 @@ export default function Portfolio() {
   // Update visible images when visibleCount changes
   useEffect(() => {
     setImages(allImages.slice(0, visibleCount));
-  }, [allImages, visibleCount]);
+  }, [allImages.length, visibleCount, cloud, firebaseImages]);
 
   // Update visible videos when visibleVideoCount changes
   useEffect(() => {
     setVideos(allVideos.slice(0, visibleVideoCount));
-  }, [allVideos, visibleVideoCount]);
+  }, [allVideos.length, visibleVideoCount, cloud, firebaseVideos]);
 
   // Update visible floor plans when visibleFloorPlanCount changes
   useEffect(() => {
     setFloorPlans(allFloorPlans.slice(0, visibleFloorPlanCount));
-  }, [allFloorPlans, visibleFloorPlanCount]);
+  }, [allFloorPlans.length, visibleFloorPlanCount, cloud, firebaseFloorPlans]);
 
   const loadImages = async () => {
     try {
@@ -434,7 +451,7 @@ export default function Portfolio() {
             </div>
 
             {/* Image Count Display */}
-            {!loading && !error && (
+            {!loading && (!error || hasCloudImages) && (
               <div className="text-center mb-6">
                 <p className="text-muted-foreground">
                   Showing {images.length} of {allImages.length} {allImages.length === 1 ? 'image' : 'images'}
@@ -443,7 +460,7 @@ export default function Portfolio() {
             )}
 
             {/* Error State */}
-            {error && (
+            {error && !hasCloudImages && (
               <div className="text-center py-12">
                 <div className="flex flex-col items-center space-y-4">
                   <AlertCircle className="w-12 h-12 text-destructive" />
@@ -466,7 +483,7 @@ export default function Portfolio() {
             )}
 
             {/* Empty State */}
-            {!loading && !error && images.length === 0 && (
+            {!loading && (!error || hasCloudImages) && images.length === 0 && (
               <div className="text-center py-12">
                 <div className="flex flex-col items-center space-y-4">
                   <Grid3X3 className="w-12 h-12 text-muted-foreground" />
@@ -483,7 +500,7 @@ export default function Portfolio() {
             )}
 
             {/* Image Gallery */}
-            {!loading && !error && images.length > 0 && (
+            {!loading && (!error || hasCloudImages) && images.length > 0 && (
               <div className={viewMode === 'masonry' ? getGridClass() : `grid ${getGridClass()} gap-6`}>
                 {images.map((image, index) => (
                   <div
@@ -503,7 +520,7 @@ export default function Portfolio() {
             )}
 
             {/* Load More Button */}
-            {!loading && !error && allImages.length > images.length && (
+            {!loading && (!error || hasCloudImages) && allImages.length > images.length && (
               <div className="text-center mt-12 mb-16">
                 <Button
                   onClick={() => setVisibleCount(prev => Math.min(prev + 6, allImages.length))}
@@ -569,7 +586,7 @@ export default function Portfolio() {
               </div>
 
               {/* Video Count Display */}
-              {!loadingVideos && !errorVideos && (
+              {!loadingVideos && (!errorVideos || hasCloudVideos) && (
                 <div className="text-center mb-6">
                   <p className="text-muted-foreground">
                     Showing {videos.length} of {allVideos.length} {allVideos.length === 1 ? 'video' : 'videos'}
@@ -578,7 +595,7 @@ export default function Portfolio() {
               )}
 
               {/* Video Error State */}
-              {errorVideos && (
+              {errorVideos && !hasCloudVideos && (
                 <div className="text-center py-12">
                   <div className="flex flex-col items-center space-y-4">
                     <AlertCircle className="w-12 h-12 text-destructive" />
@@ -601,7 +618,7 @@ export default function Portfolio() {
               )}
 
               {/* Video Empty State */}
-              {!loadingVideos && !errorVideos && videos.length === 0 && (
+              {!loadingVideos && (!errorVideos || hasCloudVideos) && videos.length === 0 && (
                 <div className="text-center py-12">
                   <div className="flex flex-col items-center space-y-4">
                     <Video className="w-12 h-12 text-muted-foreground" />
@@ -618,7 +635,7 @@ export default function Portfolio() {
               )}
 
               {/* Video Gallery */}
-              {!loadingVideos && !errorVideos && videos.length > 0 && (
+              {!loadingVideos && (!errorVideos || hasCloudVideos) && videos.length > 0 && (
                 <div className={`grid ${getGridClass()} gap-6`}>
                   {videos.map((video, index) => (
                     <div
@@ -649,7 +666,7 @@ export default function Portfolio() {
               )}
 
               {/* Load More Videos Button */}
-              {!loadingVideos && !errorVideos && allVideos.length > videos.length && (
+              {!loadingVideos && (!errorVideos || hasCloudVideos) && allVideos.length > videos.length && (
                 <div className="text-center mt-12">
                   <Button
                     onClick={() => setVisibleVideoCount(prev => Math.min(prev + 6, allVideos.length))}
@@ -716,7 +733,7 @@ export default function Portfolio() {
               </div>
 
               {/* Floor Plans Count Display */}
-              {!loadingFloorPlans && !errorFloorPlans && (
+              {!loadingFloorPlans && (!errorFloorPlans || hasCloudPlans) && (
                 <div className="text-center mb-6">
                   <p className="text-muted-foreground">
                     Showing {floorPlans.length} of {allFloorPlans.length} {allFloorPlans.length === 1 ? 'floor plan' : 'floor plans'}
@@ -725,7 +742,7 @@ export default function Portfolio() {
               )}
 
               {/* Floor Plans Error State */}
-              {errorFloorPlans && (
+              {errorFloorPlans && !hasCloudPlans && (
                 <div className="text-center py-12">
                   <div className="flex flex-col items-center space-y-4">
                     <AlertCircle className="w-12 h-12 text-destructive" />
@@ -748,7 +765,7 @@ export default function Portfolio() {
               )}
 
               {/* Floor Plans Empty State */}
-              {!loadingFloorPlans && !errorFloorPlans && floorPlans.length === 0 && (
+              {!loadingFloorPlans && (!errorFloorPlans || hasCloudPlans) && floorPlans.length === 0 && (
                 <div className="text-center py-12">
                   <div className="flex flex-col items-center space-y-4">
                     <FileText className="w-12 h-12 text-muted-foreground" />
@@ -765,7 +782,7 @@ export default function Portfolio() {
               )}
 
               {/* Floor Plans Gallery */}
-              {!loadingFloorPlans && !errorFloorPlans && floorPlans.length > 0 && (
+              {!loadingFloorPlans && (!errorFloorPlans || hasCloudPlans) && floorPlans.length > 0 && (
                 <div className={viewMode === 'masonry' ? getGridClass() : `grid ${getGridClass()} gap-6`}>
                   {floorPlans.map((floorPlan, index) => (
                     <div
@@ -789,7 +806,7 @@ export default function Portfolio() {
               )}
 
               {/* Load More Floor Plans Button */}
-              {!loadingFloorPlans && !errorFloorPlans && allFloorPlans.length > floorPlans.length && (
+              {!loadingFloorPlans && (!errorFloorPlans || hasCloudPlans) && allFloorPlans.length > floorPlans.length && (
                 <div className="text-center mt-12">
                   <Button
                     onClick={() => setVisibleFloorPlanCount(prev => Math.min(prev + 6, allFloorPlans.length))}
