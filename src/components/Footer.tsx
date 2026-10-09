@@ -65,7 +65,7 @@ export default function Footer() {
 
         <div className="border-t border-background/20 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center">
           <p className="text-background/70 text-sm sm:text-base">
-            ©2025 2818 Studios Media. All rights reserved. | Founded by Michael Mejía
+            ©2025 2818 Studios Media. All rights reserved. | Founded by Michael Mejía | <a href="/admin/login" className="hover:text-primary">Admin</a>
           </p>
           <p className="text-background/50 text-xs sm:text-sm mt-2">
             Professional real estate media services in the Washington D.C. metropolitan area
