@@ -4,7 +4,8 @@ import {
   Upload, Trash2, LogOut, Loader2, Image as ImageIcon, Video, Link2, Eye, EyeOff, Star,
   LayoutGrid, ExternalLink, ArrowUp, ArrowDown, CloudUpload,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { signOut as fbSignOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import { useAdmin } from "@/hooks/useAdmin";
 import {
   MEDIA_CATEGORIES, MediaItem, fetchMedia, uploadMediaFile, addMediaLink, deleteMedia, updateMedia, toEmbedUrl,
@@ -32,7 +33,7 @@ export default function Admin() {
 
   const load = useCallback(async () => {
     try {
-      setItems(await fetchMedia());
+      setItems(await fetchMedia(undefined, true));
     } catch {
       toast.error("Could not load media");
     }
@@ -121,7 +122,7 @@ export default function Admin() {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await fbSignOut(auth);
     navigate("/admin/login");
   };
 
