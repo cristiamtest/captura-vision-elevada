@@ -1058,6 +1058,7 @@ export default function Portfolio() {
         </div>
       )}
 
+      <MoreWork items={cloud} />
       <Footer />
     </div>
   );
