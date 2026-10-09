@@ -137,8 +137,7 @@ export default function Portfolio() {
       const portfolioImages = await Promise.all(imagePromises);
       
       // Filter out any failed downloads and sort by name
-      const validImages = portfolioImages
-        .filter((img): img is PortfolioImage => img !== null)
+      const validImages = (portfolioImages.filter(Boolean) as PortfolioImage[])
         .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
       
       setAllImages(validImages);
@@ -209,8 +208,7 @@ export default function Portfolio() {
       const portfolioVideos = await Promise.all(videoPromises);
       
       // Filter out any failed downloads and sort by name
-      const validVideos = portfolioVideos
-        .filter((vid): vid is PortfolioVideo => vid !== null)
+      const validVideos = (portfolioVideos.filter(Boolean) as PortfolioVideo[])
         .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
       
       setAllVideos(validVideos);
@@ -287,8 +285,7 @@ export default function Portfolio() {
       const portfolioFloorPlans = await Promise.all(floorPlanPromises);
       
       // Filter out any failed downloads and sort by name
-      const validFloorPlans = portfolioFloorPlans
-        .filter((fp): fp is PortfolioImage => fp !== null)
+      const validFloorPlans = (portfolioFloorPlans.filter(Boolean) as PortfolioImage[])
         .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
       
       setAllFloorPlans(validFloorPlans);
@@ -1058,6 +1055,7 @@ export default function Portfolio() {
         </div>
       )}
 
+      <MoreWork items={cloud} />
       <Footer />
     </div>
   );
