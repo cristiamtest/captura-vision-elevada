@@ -138,7 +138,7 @@ export default function Portfolio() {
       
       // Filter out any failed downloads and sort by name
       const validImages = portfolioImages
-        .filter((img): img is PortfolioImage => img !== null)
+        (.filter(Boolean) as PortfolioImage[])
         .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
       
       setAllImages(validImages);
@@ -210,7 +210,7 @@ export default function Portfolio() {
       
       // Filter out any failed downloads and sort by name
       const validVideos = portfolioVideos
-        .filter((vid): vid is PortfolioVideo => vid !== null)
+        (.filter(Boolean) as PortfolioVideo[])
         .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
       
       setAllVideos(validVideos);
@@ -288,7 +288,7 @@ export default function Portfolio() {
       
       // Filter out any failed downloads and sort by name
       const validFloorPlans = portfolioFloorPlans
-        .filter((fp): fp is PortfolioImage => fp !== null)
+        (.filter(Boolean) as PortfolioImage[])
         .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
       
       setAllFloorPlans(validFloorPlans);
