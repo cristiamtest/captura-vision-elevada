@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Lock, User, ArrowLeft, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import { usernameToEmail } from "@/lib/media";
 import { useAdmin } from "@/hooks/useAdmin";
 import { Button } from "@/components/ui/button";
@@ -24,9 +25,13 @@ export default function AdminLogin() {
     e.preventDefault();
     if (!username.trim() || !password) return toast.error("Enter your username and password");
     setBusy(true);
-    const { error } = await supabase.auth.signInWithPassword({ email: usernameToEmail(username), password });
+    try {
+      await signInWithEmailAndPassword(auth, usernameToEmail(username), password);
+    } catch {
+      setBusy(false);
+      return toast.error("Invalid username or password");
+    }
     setBusy(false);
-    if (error) return toast.error("Invalid username or password");
     toast.success("Welcome back!");
     navigate("/admin");
   };

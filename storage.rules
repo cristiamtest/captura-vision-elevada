@@ -1,31 +1,18 @@
 rules_version = '2';
-
-// Craft rules based on data in your Firestore database
-// allow write: if firestore.get(
-//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
 service firebase.storage {
   match /b/{bucket}/o {
-    // Allow public read access to portfolio images
-    match /portfolio/{allPaths=**} {
+    function isAdmin() {
+      return request.auth != null &&
+        firestore.exists(/databases/(default)/documents/admins/$(request.auth.uid));
+    }
+    match /media/{allPaths=**} {
       allow read: if true;
-      allow write: if false; // Only allow writes through Firebase Console or authenticated admin
+      allow write: if isAdmin() && request.resource.size < 500 * 1024 * 1024;
+      allow delete: if isAdmin();
     }
-    
-    // Allow public read access to portfolio videos
-    match /videos-portfolio/{allPaths=**} {
-      allow read: if true;
-      allow write: if false; // Only allow writes through Firebase Console or authenticated admin
-    }
-    
-    // Allow public read access to floor plans
-    match /floor-plans-portfolio/{allPaths=**} {
-      allow read: if true;
-      allow write: if false; // Only allow writes through Firebase Console or authenticated admin
-    }
-    
-    // Default rule - deny all access to other files
-    match /{allPaths=**} {
-      allow read, write: if false;
-    }
+    match /portfolio/{allPaths=**} { allow read: if true; allow write: if isAdmin(); }
+    match /videos-portfolio/{allPaths=**} { allow read: if true; allow write: if isAdmin(); }
+    match /floor-plans-portfolio/{allPaths=**} { allow read: if true; allow write: if isAdmin(); }
+    match /{allPaths=**} { allow read, write: if false; }
   }
 }
